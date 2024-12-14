@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using VolcanoAPI.Data;
 
-namespace VolcanoAPI
+namespace VolcanoAPI.Contexts
 {
     public class VolcanoContext : DbContext
     {
@@ -11,7 +11,6 @@ namespace VolcanoAPI
             : base(options)
         {
         }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<VolcanoData>(entity =>
