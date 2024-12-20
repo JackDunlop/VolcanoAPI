@@ -7,9 +7,6 @@ using static System.Net.WebRequestMethods;
 
 namespace VolcanoAPI.Controllers
 {
-    //      GET /countries
-    //      GET /volcanoes
-    //      GET /volcano/{id}
 
     [ApiController]
     public class VolcanoController : ControllerBase
@@ -35,11 +32,10 @@ namespace VolcanoAPI.Controllers
                 var volcanos = _context.Volcanoes.Where(v => v.country == country).Select(v => new { v.id, v.name, v.country, v.region, v.subregion }).ToList();
                 if (volcanos.Count() == 0)
                 {
-                    return NotFound(new { message = "Country not found", errorCode = 404 });
+                    return NotFound(new { message = "Country not found" });
                 }
                 return Ok(new { data = volcanos });
             }
-
 
             if (populatedWithin is not ("5km" or "10km" or "30km" or "100km"))
             {
@@ -66,9 +62,9 @@ namespace VolcanoAPI.Controllers
         public IActionResult GetVolcanoById(int id)
         {
             var volcano = _context.Volcanoes.Where(v => v.id == id).Select(v => new { v.id, v.name, v.country, v.region, v.subregion, v.last_eruption,v.summit, v.elevation, v.latitude, v.longitude }).ToList();
-            if (volcano == null)
+            if (volcano == null || volcano.Count() == 0) // Could probably use LINQ Any
             {
-                return NotFound(new { message = "Volcano not found", errorCode = 404 });
+                return NotFound("Volcano not found");
             }
             return Ok(volcano);
         }  

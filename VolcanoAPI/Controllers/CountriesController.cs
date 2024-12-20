@@ -19,7 +19,6 @@ namespace VolcanoAPI.Controllers
             _context = context;
         }
 
-        
         [HttpGet("/countries")]
         public IActionResult GetCountries()
         {
